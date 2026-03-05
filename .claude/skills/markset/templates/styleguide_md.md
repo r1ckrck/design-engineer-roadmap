@@ -1,13 +1,17 @@
 # Markdown Styleguide
 
 ## Frontmatter
-Required fields:
+Required fields — all must be present:
 ```yaml
 ---
 title: "Document Title"
 author: "Arnesh Mandal"
 version: "1.0"
 date: "2026-01-30"
+include-before: |
+  \begin{lstlisting}[style=coverasciiart]
+  Your ASCII art here (max 60 chars wide, 16 lines tall)
+  \end{lstlisting}
 ---
 ```
 
@@ -69,20 +73,6 @@ def hello():
    +---------+
 ```
 ````
-## Cover ASCII Art
-- Use `include-before` in YAML in frontmatter section after date
-- max width of cover ascii art: 60
-- max height of cover ascii art: 16
-
-```yaml
----
-include-before: |
-  \begin{lstlisting}[style=coverasciiart]
-  Your ASCII art here
-  \end{lstlisting}
----
-```
-
 ## Callouts
 Types: `note`, `tip`, `warning`, `important`
 Never inside lists/tables or nested.
