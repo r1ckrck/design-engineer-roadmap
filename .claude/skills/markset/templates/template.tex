@@ -23,12 +23,18 @@
 % Fonts (requires XeLaTeX/LuaLaTeX via Tectonic)
 \usepackage{fontspec}
 \setmainfont{Inter}[
+  Path = $fontdir$/,
   UprightFont = *-Regular,
   BoldFont = *-SemiBold,
   ItalicFont = *-Italic,
   BoldItalicFont = *-SemiBoldItalic
 ]
-\setmonofont{JetBrains Mono}[
+\setmonofont{JetBrainsMono}[
+  Path = $fontdir$/,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Italic,
+  BoldItalicFont = *-BoldItalic,
   Scale=0.9
 ]
 
