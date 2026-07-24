@@ -32,3 +32,8 @@ pnpm-debug.log*
 # --- Claude Code local settings ---
 .claude/settings.local.json
 .claude/plans/
+# --- Web app (Next static export) ---
+web/.next/
+web/out/
+web/node_modules/
+web/public/downloads/

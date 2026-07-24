@@ -1,0 +1,36 @@
+name: Deploy website
+
+# On push to main touching the site, build the Next static export in a Node container and
+# publish it into the server-owned folder that Caddy serves. Mirrors the slides pipeline.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - "skills/**"
+      - ".forgejo/workflows/deploy.yml"
+
+jobs:
+  build-deploy:
+    runs-on: docker
+    container:
+      image: node:20-bookworm-slim
+      # The server-owned publish folder, bind-mounted in. Caddy serves this folder.
+      volumes:
+        - /data/appdata/der/public:/mnt/public
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install rsync and git
+        run: apt-get update && apt-get install -y --no-install-recommends rsync git
+
+      - name: Build static site
+        run: |
+          cd web
+          npm ci
+          npm run build
+          # prebuild zips the skills into public/downloads/, then Next static-exports to web/out
+
+      - name: Publish
+        run: rsync -a --delete web/out/ /mnt/public/

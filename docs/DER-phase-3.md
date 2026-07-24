@@ -1,204 +1,130 @@
 ---
-title: "Phase 3: Version Control"
+title: "Phase 3: Claude Code Core"
 author: "Arnesh Mandal"
-version: "1.0"
-date: "2026-02-09"
+version: "2.0"
+date: "2026-07-24"
 include-before: |
   \begin{lstlisting}[style=coverasciiart]
-        PHASE 3: VERSION CONTROL
+        PHASE 3 : CLAUDE CODE CORE
 
-    Day 7        Day 8        Day 9
-      |            |            |
-      v            v            v
-  +--------+  +--------+  +----------+
-  | init   |  | log    |  | GitHub   |
-  | add    |->| diff   |->| remote   |
-  | commit |  | restore|  | push/pull|
-  +--------+  +--------+  +----------+
-  First Commit History &   Cloud Backup
-                 Undo       & Sharing
+     you  -- plain english -->  Claude Code
+                                     |
+                                     v
+            +------------------------------+
+            | reads . plans . writes       |
+            | edits . runs  . searches web |
+            +------------------------------+
+                        |
+          guided, not blind: build + explain
 
-        Your work, tracked forever
+         Days 6-7   |   ~1 hour a day
   \end{lstlisting}
 ---
 
-# Phase 3: Version Control
+# Phase 3: Claude Code Core
 
-**Days 7–9 | ~30 minutes per day**
+**Days 6-7 | ~1 hour per day**
 
-Learn to track your project history, undo mistakes, and back up your work to the cloud with Git and GitHub.
+This is the tool everything else runs on.
 
-## Day 7: Git Basics
+Claude Code is an AI agent that lives in your terminal. You talk to it in plain English, and it reads your files, writes and edits code, runs commands, and searches the web — all on your direction, and always asking before it changes anything. From here on, it is your primary way of building.
 
-**Goal:** Track your project changes locally using Git
-**Setup:** Open your terminal and navigate to `my-first-site`
+::: important
+**Guided, not blind.** The single habit that makes this course work: never accept code you do not understand. After Claude builds something, ask it to explain what it wrote and why. You are the designer directing the work — you keep the intent and the understanding, Claude keeps the typing. Blind prompting ("just build it, I don't care how") is how people end up with software they cannot fix or change.
+:::
 
-1. **Install Git and check the version**
-   - On Mac, Git is pre-installed—check by running `git --version`
-   - On Windows, download and install Git from [git-scm.com](https://git-scm.com)
-   - You should see output like `git version 2.x.x`
+## Day 6: Meeting Claude Code
 
-2. **Configure your identity**
-   - Git tags every commit with your name and email
-   - Run: `git config --global user.name "Your Name"`
-   - Run: `git config --global user.email "you@example.com"`
-   - Verify with: `git config --list`
+**Goal:** Start Claude Code, learn how it asks permission, and give it project context.
 
-3. **Initialize a repository**
-   - Make sure you're inside `my-first-site`: `cd my-first-site`
-   - Run: `git init`
-   - You should see: `Initialized empty Git repository in ...`
-   - This creates a hidden `.git` folder—Git now tracks this directory
+**Setup:** Open your terminal inside `my-first-site` (or the editor's built-in terminal there).
 
-4. **Check your status**
-   - Run: `git status`
-   - Git lists all untracked files in red—these are files Git sees but isn't tracking yet
-   - You'll see `index.html`, `css/styles.css`, and `js/script.js`
+1. **Start Claude Code**
+   - Run `claude`. An interactive session opens in your terminal.
+   - You are now talking to the agent. Type in plain English, not commands.
 
-5. **Stage your files**
-   - Staging tells Git which files to include in your next commit
-   - Stage everything at once: `git add .`
-   - Run `git status` again—the files should now appear in green under "Changes to be committed"
+2. **Ask it to look around**
+   - Type: `What files and folders are in this project?`
+   - Claude reads the project and answers. Notice it worked out the structure itself — you did not have to explain it.
 
-6. **Make your first commit**
-   - A commit is a saved snapshot of your staged files
-   - Run: `git commit -m "Initial commit: add site files"`
-   - You should see output showing the branch name and files changed
+3. **Practice the guided habit immediately**
+   - Type: `Explain what an index.html file is for, in simple terms.`
+   - Reading its explanation is the point. You are building understanding alongside the work, from the very first prompt.
 
-7. **Verify the commit**
-   - Run `git status` again
-   - You should see: `nothing to commit, working tree clean`
-   - Your project history has begun!
+4. **Understand permissions**
+   - When Claude wants to change a file or run a command, it asks first and shows you what it will do.
+   - You approve or decline each time. This is your safety net — nothing happens to your project without your yes.
+   - As you trust a task, you can allow it to proceed without asking, but start by reading each request.
 
-## Day 8: Viewing History and Undoing Mistakes
+5. **Give the project a memory with CLAUDE.md**
+   - `CLAUDE.md` is a plain file Claude reads automatically every session. It holds facts about your project so you do not repeat yourself.
+   - Ask Claude: `Create a CLAUDE.md that says this is a simple practice website with css and js folders.`
+   - Open the file it made and read it. This small file is the seed of a big idea you will grow in Phase 4.
 
-**Goal:** Read your project's history and recover from errors
-**Setup:** Open your `my-first-site` repo from Day 7
+6. **See what Claude is working with**
+   - Type `/context`. This shows what Claude currently has loaded — your files, the CLAUDE.md, and more.
+   - Understanding what is in context is understanding what Claude "knows" right now. It is the map of the agent's attention.
 
-1. **Make a small change to create history**
-   - Open `index.html` and add a comment: `<!-- updated on day 8 -->`
-   - Save the file, then stage and commit: `git add . && git commit -m "Add day 8 comment"`
+## Day 7: Web, Planning, and Your First Real Files
 
-2. **View your commit history**
-   - Run: `git log`
-   - You'll see each commit with its full hash, author, date, and message
-   - Press `q` to exit the log view
+**Goal:** Use Claude Code's built-in web abilities, try planning before building, and create your first real files — with understanding.
 
-3. **View a compact history**
-   - Run: `git log --oneline`
-   - This shows each commit on one line: a short hash followed by the message
-   - Much easier to scan when a project has many commits
+**Setup:** Continue your Claude Code session inside `my-first-site`.
 
-4. **See what changed before staging**
-   - Modify `index.html` again—add or change any text
-   - Run: `git diff`
-   - Lines starting with `+` were added; lines starting with `-` were removed
+1. **Let Claude search the web**
+   - Type: `Search the web for what a favicon is and summarize it.`
+   - Claude has web search built in. It looks it up and reports back — no extra setup, no browser.
 
-5. **See what is already staged**
-   - Stage your change: `git add index.html`
-   - Run: `git diff --staged`
-   - This shows the diff between your last commit and what is staged
+2. **Let Claude read a specific page**
+   - Type: `Read the page at example.com and tell me what is on it.`
+   - This is Claude fetching a single page's content directly. Between search and fetch, Claude can research on its own.
 
-6. **Discard file changes**
-   - Make another small edit to `index.html` but do not stage it
-   - Run: `git restore index.html`
-   - Check the file—your edit is gone, restored to the last committed version
+3. **Try planning before building**
+   - Type: `Plan out a simple home page for this site before writing anything.`
+   - Claude proposes an approach first, so you can steer before any code exists. You review, adjust, then let it proceed. This is a light taste of "plan mode," which you will use fully in Phase 9.
 
-7. **Unstage a file**
-   - Stage `index.html` again: `git add index.html`
-   - Run: `git restore --staged index.html`
-   - Run `git status`—the file is back to unstaged (modified but not staged)
+4. **Build your first real file**
+   - Type: `Create a simple, clean index.html for this practice site with a heading and a short paragraph.`
+   - Approve the change when Claude asks. Your empty `index.html` now has real content.
 
-8. **Amend the last commit message**
-   - If you just committed with a typo, you can fix it immediately
-   - Run: `git commit --amend -m "Add day 8 comment (corrected)"`
-   - This rewrites the most recent commit—only do this before pushing to GitHub
+5. **Understand what it built**
+   - Type: `Walk me through the index.html you just wrote, line by line, in plain terms.`
+   - This is the guided habit in full. You now understand your own file, even though you did not type it.
 
-## Day 9: GitHub — Backup and Sharing
+6. **Save the snapshot**
+   - Leave Claude Code (type `/exit`) or open another terminal.
+   - Run `git add .` and `git commit -m "Add home page content"`, then `git push`.
+   - Your first Claude-built work is now in your history and backed up.
 
-**Goal:** Push your project to GitHub for cloud backup and sharing
-**Setup:** Create a free account at [github.com](https://github.com) if you don't have one
-
-1. **Create a new repository on GitHub**
-   - Click the `+` button in the top-right and choose "New repository"
-   - Name it `my-first-site`
-   - Set it to Public
-   - Do not check "Add a README file" or "Add .gitignore"—your repo already has files
-   - Click "Create repository"
-
-2. **Copy the remote URL**
-   - After creating the repo, GitHub shows a quick-setup page
-   - Copy the HTTPS URL—it looks like `https://github.com/your-username/my-first-site.git`
-
-3. **Connect your local repo to GitHub**
-   - Back in your terminal, inside `my-first-site`:
-   - Run: `git remote add origin https://github.com/your-username/my-first-site.git`
-   - `origin` is the standard name for your primary remote
-
-4. **Rename the branch to main**
-   - Run: `git branch -M main`
-   - This ensures your branch name matches GitHub's default
-
-5. **Push to GitHub**
-   - Run: `git push -u origin main`
-   - The `-u` flag sets `origin main` as the default tracking branch for future pushes
-   - You may be prompted to log in—use your GitHub credentials or a personal access token
-
-6. **Verify on GitHub.com**
-   - Refresh your GitHub repo page
-   - You should see all your files listed with your commit message
-   - Click on a file to view its contents
-
-7. **Make a change, commit, and push again**
-   - Edit `index.html` locally—add a heading or update some text
-   - Stage and commit: `git add . && git commit -m "Update homepage content"`
-   - Push with just: `git push`
-   - Refresh GitHub—your update appears immediately
-
-8. **Bonus: Clone a repository**
-   - Cloning downloads any GitHub repo to your machine
-   - Run: `git clone https://github.com/some-user/some-repo.git`
-   - This creates a new folder with the full project and its entire history
-   - Try cloning a public project you find interesting
+::: note
+**Native web first.** Claude Code can search the web and read pages on its own, with no extra tools. Remember this: later, in Phase 6, you will add Playwright to drive a full browser — but that is only for special cases like testing your own site or getting past sites that block simple reads. For looking things up and reading pages, these built-in abilities are the default. Do not forget they exist.
+:::
 
 ## Phase 3 Checklist
 
 By the end of Phase 3, you should be comfortable with:
 
-- Installing Git and configuring your name and email
-- Initializing a repository with `git init`
-- Checking file status with `git status`
-- Staging files with `git add`
-- Creating commits with `git commit -m`
-- Viewing full commit history with `git log`
-- Viewing compact history with `git log --oneline`
-- Inspecting unstaged changes with `git diff`
-- Inspecting staged changes with `git diff --staged`
-- Discarding edits with `git restore`
-- Unstaging files with `git restore --staged`
-- Correcting the last commit with `git commit --amend`
-- Connecting a local repo to GitHub with `git remote add origin`
-- Pushing to GitHub with `git push -u origin main`
+- Starting Claude Code with `claude` inside a project
+- Prompting in plain English and reading the responses
+- The guided habit: asking Claude to explain what it built
+- Approving or declining permission requests
+- Creating and reading a basic `CLAUDE.md`
+- Checking what Claude has loaded with `/context`
+- Using Claude's built-in web search and page reading
+- Asking Claude to plan before it builds
 
 ## Quick Reference
 
-| Command | What it does |
-|---------|--------------|
-| `git init` | Initialize a new local repository |
-| `git config --global user.name` | Set your commit author name |
-| `git status` | Show staged, unstaged, and untracked files |
-| `git add .` | Stage all changes in the current directory |
-| `git commit -m "msg"` | Commit staged changes with a message |
-| `git log` | View full commit history |
-| `git log --oneline` | View compact one-line history |
-| `git diff` | Show unstaged changes |
-| `git diff --staged` | Show staged changes |
-| `git restore <file>` | Discard unstaged changes to a file |
-| `git restore --staged <file>` | Unstage a file |
-| `git commit --amend -m` | Rewrite the last commit message |
-| `git remote add origin <url>` | Connect local repo to a remote |
-| `git branch -M main` | Rename current branch to main |
-| `git push -u origin main` | Push and set the tracking branch |
-| `git push` | Push to the tracked remote branch |
-| `git clone <url>` | Download a remote repo locally |
-: Command reference for Phase 3
+| Action | How |
+|-------------------------------------|-----------------------------------|
+| Start Claude Code | `claude` (inside a project) |
+| Ask something | Type plain English |
+| See what Claude has loaded | `/context` |
+| Give the project lasting facts | A `CLAUDE.md` file |
+| Understand any code | "Walk me through what you wrote" |
+| Leave the session | `/exit` |
+: Working with Claude Code, at a glance.
+
+## Next
+
+Claude Code writes files for you now. In **Phase 4: Context Engineering**, you learn to structure a project so it works with you brilliantly — the difference between an agent that guesses and one that knows exactly where everything belongs.

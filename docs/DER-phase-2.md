@@ -1,192 +1,157 @@
 ---
-title: "Phase 2: IDE Proficiency"
+title: "Phase 2: Version Control"
 author: "Arnesh Mandal"
-version: "1.0"
-date: "2026-02-09"
+version: "2.0"
+date: "2026-07-24"
 include-before: |
   \begin{lstlisting}[style=coverasciiart]
-              PHASE 2: IDE POWER USER
+           PHASE 2 : VERSION CONTROL
 
-         Day 5                    Day 6
-           |                        |
-           v                        v
-    +--------------+         +--------------+
-    | File Explorer|         | Cmd+P        |
-    | Tabs & Split |    -->  | Multi-cursor |
-    | Syntax Color |         | Extensions   |
-    +--------------+         +--------------+
-    Open & Navigate          Shortcuts & Speed
+     commit    commit    commit    commit
+       o ------- o ------- o ------- o  --> now
+       |         |         |         |
+      init      add      log      push
 
-              +------------------+
-              | Built-in Terminal|
-              | (Best of Both!)  |
-              +------------------+
+     local history            cloud backup
+     +-----------+            +-----------+
+     |   Git     |  -- push ->|  GitHub   |
+     +-----------+            +-----------+
 
-        Code editor becomes your command center
+        Days 4-5   |   ~1 hour a day
   \end{lstlisting}
 ---
 
-# Phase 2: IDE Proficiency
+# Phase 2: Version Control
 
-**Days 5–6 | ~30 minutes per day**
+**Days 4-5 | ~1 hour per day**
 
-Learn to work efficiently in a code editor.
+You have a project. Now you make it safe.
 
-## Day 5: IDE Basics
+Version control is a system that records every change you make, so you can look back, undo, and never lose work. Git does this on your machine; GitHub keeps a copy in the cloud. Once this is in place, you can experiment freely — because you can always return to a working state.
 
-**Goal:** Get comfortable opening projects, navigating files, and making edits in your code editor
+::: tip
+**Map first.** Two ideas unlock all of Git. A *commit* is a saved snapshot of your project at a moment in time. A *repository* (repo) is the full timeline of those snapshots. Everything you do today is either taking a snapshot or moving along that timeline. Hold that and the commands make sense.
+:::
 
-**Setup:** Open Cursor or VS Code
+## Day 4: Tracking Changes Locally
 
-1. **Open your project folder**
-   - Go to File → Open Folder (or `Cmd + O` on Mac / `Ctrl + O` on Windows)
-   - Navigate to your `my-first-site` folder from Phase 1
-   - Notice the file explorer panel on the left showing your project structure
+**Goal:** Turn `my-first-site` into a tracked repository and record your first snapshots.
 
-2. **Explore the interface**
-   - **File Explorer (left):** Shows all files and folders in your project
-   - **Editor (center):** Where you write and edit code
-   - **Status Bar (bottom):** Shows file info, line number, language
-   - **Activity Bar (far left):** Icons for different panels (files, search, git, extensions)
+**Setup:** Open your terminal (or the editor's built-in terminal) inside `my-first-site`.
 
-3. **Open and edit files**
-   - Click on `index.html` in the file explorer to open it
-   - Notice syntax highlighting—different colors for different parts of the code
-   - Add a new line inside `<body>`: `<p>This is my first paragraph.</p>`
-   - Save the file with `Cmd + S` (Mac) or `Ctrl + S` (Windows)
+1. **Tell Git who you are**
+   - Git stamps every commit with a name and email. Set them once, globally.
+   - Run `git config --global user.name "Your Name"`.
+   - Run `git config --global user.email "you@example.com"`.
 
-4. **Work with multiple files**
-   - Click on `css/styles.css` to open it in a new tab
-   - You now have two tabs open at the top of the editor
-   - Click between tabs to switch files
-   - Try dragging a tab to the right side to split the editor view
+2. **Start tracking the project**
+   - Make sure you are inside `my-first-site` (`pwd` to check).
+   - Run `git init`. This creates a hidden `.git` folder — Git now watches this project.
 
-5. **Create a new file from the IDE**
-   - Right-click on the `js` folder in the file explorer
-   - Select "New File"
-   - Name it `script.js`
-   - Add this content: `console.log("Hello from JavaScript!");`
-   - Save the file
+3. **Check the status**
+   - Run `git status`. Git lists your files as "untracked" — it can see them but is not yet saving them.
 
-6. **Create a new folder from the IDE**
-   - Right-click in the file explorer (in empty space)
-   - Select "New Folder"
-   - Name it `assets`
+4. **Stage your files**
+   - Staging chooses what goes into the next snapshot.
+   - Run `git add .` (the `.` means "everything here").
+   - Run `git status` again — the files are now staged, ready to commit.
 
-7. **Use the minimap**
-   - Look at the right side of the editor—there's a small preview of your code
-   - This is the minimap—useful for navigating large files
-   - Click on different parts of the minimap to jump around
+5. **Take your first snapshot**
+   - Run `git commit -m "Initial commit: project structure"`.
+   - The text in quotes is your message — a short note on what this snapshot contains.
 
-## Day 6: Shortcuts, Extensions, and Integrated Terminal
+6. **Confirm and repeat**
+   - Run `git status`; it should say "nothing to commit, working tree clean."
+   - Make any small change, then run `git add .` and `git commit -m "describe the change"` again. That loop — change, add, commit — is the heartbeat of version control.
 
-**Goal:** Speed up your workflow with keyboard shortcuts, extensions, and the built-in terminal
+7. **Read your history**
+   - Run `git log --oneline` to see your snapshots, one per line, newest first.
+   - Each line is a short code (the commit's ID) and your message.
 
-**Setup:** Open your `my-first-site` project in Cursor or VS Code
+## Day 5: Backing Up to GitHub
 
-### Part 1: Essential Shortcuts
+**Goal:** Push your local history to GitHub so it is safe and shareable.
 
-1. **Quick file opening**
-   - Press `Cmd + P` (Mac) or `Ctrl + P` (Windows)
-   - Start typing `index` and see it filter files
-   - Press `Enter` to open the file
-   - This is faster than clicking through folders!
+**Setup:** Create a free account at [github.com](https://github.com) if you do not have one.
 
-2. **Find and replace**
-   - Open `index.html`
-   - Press `Cmd + F` (Mac) or `Ctrl + F` (Windows) to open Find
-   - Search for "Welcome"
-   - Press `Cmd + Shift + F` (Mac) or `Ctrl + Shift + F` (Windows) to search across all files
+1. **Create an empty repository online**
+   - On GitHub, click the plus button, then New repository.
+   - Name it `my-first-site` and set it to Private or Public as you prefer.
+   - Do not add a README or .gitignore — your project already has files.
+   - Click Create repository.
 
-3. **Multi-cursor editing**
-   - In `styles.css`, hold `Option` (Mac) or `Alt` (Windows) and click in multiple places
-   - You now have multiple cursors—type and it appears in all locations
-   - Press `Escape` to go back to one cursor
+2. **Copy the connection address**
+   - GitHub shows a setup page with an HTTPS address ending in `.git`.
+   - Copy it; it looks like `https://github.com/you/my-first-site.git`.
 
-4. **Duplicate and move lines**
-   - Place your cursor on any line
-   - Press `Shift + Option + Down` (Mac) or `Shift + Alt + Down` (Windows) to duplicate the line
-   - Press `Option + Up/Down` (Mac) or `Alt + Up/Down` (Windows) to move the line
+3. **Connect your local project to GitHub**
+   - Back in your terminal, inside `my-first-site`, run the command below with your address.
+   - `origin` is just the standard nickname for your main cloud copy.
 
-5. **Comment code quickly**
-   - Select a line or block of code
-   - Press `Cmd + /` (Mac) or `Ctrl + /` (Windows) to toggle comments
-   - Try it on your CSS rules
+```bash
+git remote add origin https://github.com/you/my-first-site.git
+```
 
-6. **Command Palette**
-   - Press `Cmd + Shift + P` (Mac) or `Ctrl + Shift + P` (Windows)
-   - This opens the Command Palette—you can search for any action
-   - Type "theme" and explore changing the color theme
+4. **Name your main branch**
+   - Run `git branch -M main` so your branch name matches GitHub's default.
 
-### Part 2: Extensions
+5. **Push your history up**
+   - Run `git push -u origin main`.
+   - The `-u` sets this as the default destination, so future pushes are just `git push`.
+   - You may be asked to log in the first time.
 
-7. **Open the Extensions panel**
-   - Click the Extensions icon in the Activity Bar (looks like 4 squares)
-   - Or press `Cmd + Shift + X` (Mac) or `Ctrl + Shift + X` (Windows)
+6. **See it on GitHub**
+   - Refresh your repository page. Your files and commit messages are now there.
 
-8. **Install useful extensions**
-   - Search for and install these beginner-friendly extensions:
-   - **Prettier:** Auto-formats your code to look clean
-   - **Live Server:** Preview your HTML in a browser with auto-refresh
-   - **Auto Rename Tag:** When you edit an HTML tag, it updates the closing tag too
+7. **Practice the everyday loop**
+   - Change a file locally, then run `git add .` and `git commit -m "your message"`.
+   - Run `git push` to send it up. Refresh GitHub to watch it appear.
 
-9. **Try Live Server**
-   - Open `index.html`
-   - Right-click in the editor and select "Open with Live Server"
-   - Your browser should open showing your page!
-   - Make a change to the HTML, save, and watch the browser update automatically
+::: note
+**Cloning: the reverse direction.** `git clone <address>` downloads any repository — with its full history — onto your machine. You will use this constantly: to pick up a project on another computer, or to work from something someone shared. It is how a teammate on Windows gets your project and runs it, a portability idea you will make solid in Phase 4.
+:::
 
-### Part 3: Integrated Terminal
+## Undo: A Reference, Not a Drill
 
-10. **Open the integrated terminal**
-    - Press `` Ctrl + ` `` (backtick key, below Escape)
-    - A terminal panel opens at the bottom of your IDE
-    - Notice it's already in your project folder!
+You do not need to memorize undo commands today. Keep this table handy and reach for it when you need it.
 
-11. **Run commands without leaving your editor**
-    - Try `ls` (Mac) or `dir` (Windows) to see your files
-    - Try `pwd` to confirm your location
-    - Try `cat index.html` to view file contents
-
-12. **Multiple terminals**
-    - Click the `+` icon in the terminal panel to open a new terminal
-    - You can have multiple terminals running at once
-    - Use the dropdown to switch between them
-
-13. **Close and reopen terminal**
-    - Press `` Ctrl + ` `` again to hide the terminal
-    - Press it once more to show it again
+| Situation | Command |
+|-------------------------------------------|-------------------------------|
+| Discard unsaved changes to a file | `git restore <file>` |
+| Unstage a file (keep the changes) | `git restore --staged <file>` |
+| Fix the last commit's message | `git commit --amend -m "new"` |
+| See the full history in detail | `git log` |
+: Undo and inspect commands, for when you need them.
 
 ## Phase 2 Checklist
 
 By the end of Phase 2, you should be comfortable with:
 
-- Opening a project folder in your IDE
-- Navigating files using the file explorer
-- Working with multiple files and tabs
-- Creating new files and folders from the IDE
-- Using `Cmd/Ctrl + P` to quickly open files
-- Using `Cmd/Ctrl + F` to find text
-- Using `Cmd/Ctrl + Shift + F` to search across files
-- Using multi-cursor editing
-- Using `Cmd/Ctrl + /` to comment code
-- Installing and using extensions
-- Using the integrated terminal
-- Running Live Server to preview your work
+- Setting your Git identity with `git config`
+- Starting tracking with `git init`
+- Checking state with `git status`
+- Staging with `git add .` and committing with `git commit -m`
+- Reading history with `git log --oneline`
+- Connecting to GitHub with `git remote add origin`
+- Pushing with `git push -u origin main`, then `git push`
+- Knowing `git clone` downloads a project
 
-## Shortcut Quick Reference
+## Quick Reference
 
-| Action | Mac | Windows |
-|-------------|-----------|-----------|
-| Save file | `Cmd + S` | `Ctrl + S` |
-| Quick open file | `Cmd + P` | `Ctrl + P` |
-| Find in file | `Cmd + F` | `Ctrl + F` |
-| Find in all files | `Cmd + Shift + F` | `Ctrl + Shift + F` |
-| Command Palette | `Cmd + Shift + P` | `Ctrl + Shift + P` |
-| Toggle comment | `Cmd + /` | `Ctrl + /` |
-| Duplicate line | `Shift + Option + Down` | `Shift + Alt + Down` |
-| Move line up/down | `Option + Up/Down` | `Alt + Up/Down` |
-| Multi-cursor | `Option + Click` | `Alt + Click` |
-| Toggle terminal | `` Ctrl + ` `` | `` Ctrl + ` `` |
-| Extensions panel | `Cmd + Shift + X` | `Ctrl + Shift + X` |
-: Keyboard shortcuts for IDE workflow
+| Command | What it does |
+|-----------------------------|----------------------------------------|
+| `git init` | Start tracking this project |
+| `git status` | Show what changed and what is staged |
+| `git add .` | Stage all changes for the next commit |
+| `git commit -m "msg"` | Save a snapshot with a message |
+| `git log --oneline` | View compact history |
+| `git remote add origin url` | Connect to a GitHub repo |
+| `git branch -M main` | Name the main branch |
+| `git push -u origin main` | Push and set the default destination |
+| `git push` | Push to the set destination |
+| `git clone url` | Download a repo with its history |
+: The Git commands you actually need.
+
+## Next
+
+Your work is tracked and backed up. In **Phase 3: Claude Code Core**, you meet the tool at the center of everything — the AI agent that writes and edits code on your direction.
