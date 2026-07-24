@@ -138,8 +138,10 @@ html {
   }
   .day-viz {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* safe: center when it fits, top-align when the illustration is taller than the
+       panel, so its top never clips and the whole thing scrolls. */
+    align-items: safe center;
+    justify-content: safe center;
     padding: 1.5rem;
   }
 }
