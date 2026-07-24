@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Every value traces to a principle in web/plan/design.md.
+ * Colors come from the assistant system. DARK is the default theme; a
+ * [data-theme="light"] attribute on <html> overrides to the light values.
+ */
+@theme {
+  /* Dark — the default. */
+  --color-bg: #111111;
+  --color-fg: #f2eee3;
+  --color-muted: #a8a39a;
+  --color-border: rgba(242, 238, 227, 0.14);
+  --color-surface: #1f1e1e;
+  --color-accent: #b89aaa; /* dusty rose — links, current, action */
+  --color-caution: #dfae68; /* warm ochre — the one "important" tint */
+
+  /* Type — mapped from the next/font variables in fonts.ts. */
+  --font-sans: var(--f-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--f-mono), ui-monospace, monospace;
+  --font-display: var(--f-display), var(--f-sans), sans-serif;
+
+  /* Radius — a small, calm ladder. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Motion — quiet and quick. */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+
+  /* Layout — the constrained reading measure. */
+  --measure: 44rem;
+}
+
+/* Light theme. */
+[data-theme="light"] {
+  --color-bg: #f2eee3;
+  --color-fg: #111111;
+  --color-muted: #7a7569;
+  --color-border: rgba(17, 17, 17, 0.14);
+  --color-surface: #e5e1d6;
+  --color-accent: #5c3f4e; /* dusty plum */
+  --color-caution: #976712;
+}
+
+/* sugar-high syntax tokens — restrained: keywords take the accent, strings and
+   comments stay quiet, everything else reads as foreground. Theme-aware via tokens. */
+:root {
+  --sh-identifier: var(--color-fg);
+  --sh-keyword: var(--color-accent);
+  --sh-string: var(--color-muted);
+  --sh-class: var(--color-fg);
+  --sh-property: var(--color-fg);
+  --sh-entity: var(--color-fg);
+  --sh-jsxliterals: var(--color-fg);
+  --sh-sign: var(--color-muted);
+  --sh-comment: var(--color-muted);
+}
+
+/* Base reading defaults — comfortable measure, generous line-height, left-aligned. */
+body {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Subtle scrollbars — transparent track (never a jarring white bar), quiet thumb. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-muted) 45%, transparent) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-muted) 40%, transparent);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-muted) 65%, transparent);
+  background-clip: padding-box;
+}
+
+/* Reduced motion: drop transitions and smooth scroll when the reader opts out. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Day layout — one structure (.day-content > .day-text + .day-viz) reflowed across three sizes.
+ * Mobile: app-like fixed viewport; text and illustration are horizontal scroll-snap panels.
+ * Tablet: stacked, centered text with the illustration below. Desktop: centered text + right rail.
+ */
+
+/* Mobile (< lg): swipe horizontally between the text and the illustration. */
+@media (max-width: 1023.98px) {
+  .day-page {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  .day-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .day-text,
+  .day-viz {
+    flex: 0 0 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    overflow-y: auto;
+  }
+  .day-text {
+    padding: 1.5rem;
+  }
+  .day-viz {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+}
+
+/* Tablet / narrow desktop (lg to < xl): stacked, centered, illustration below the text. */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .day-content {
+    display: block;
+    padding: 2.5rem 1.5rem;
+  }
+  .day-text {
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+  .day-viz {
+    max-width: 42rem;
+    margin: 2rem auto 0;
+  }
+}
+
+/* Desktop (>= xl): centered text column with a sticky right rail for the illustration. */
+@media (min-width: 1280px) {
+  .day-content {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 1.5rem;
+  }
+  .day-text {
+    grid-column: 2;
+    max-width: 42rem;
+    min-width: 0;
+  }
+  .day-viz {
+    grid-column: 3;
+    width: 20rem;
+    justify-self: start;
+    align-self: start;
+    position: sticky;
+    top: 6rem;
+  }
+}
